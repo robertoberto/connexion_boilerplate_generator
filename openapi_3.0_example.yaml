@@ -1,0 +1,2569 @@
+---
+openapi: 3.0.0
+info:
+  title: Gravscale
+  description: |-
+    ## Resumo
+
+    Lista de endpoints da Gravscale.
+
+    ## Autenticação
+
+    ### Token de acesso
+
+    A autenticação da API será realizada através de um _**token**_ passado no _header_ `Authorization`. Exemplo:
+
+    ```
+    Authorization: Bearer <token>
+    Accept: application/json
+    ```
+
+    **Observações:**
+
+    1) Este _token_ será gerado através do painel do cliente e deve estar associado ao seu Cliente ID.
+
+    2) Chaves de administrador também serão geradas para uso interno das APIs.
+
+    3) Como administrador, a opção de personificar um usuário deve estar disponível.
+
+    ### Personificar um usuário
+
+    Personifique um usuário com base em seu Cliente ID, passando esse valor junto com o _header_ `ClientId`. Exemplo:
+
+    ```
+    Authorization: Bearer <token>
+    ClientId: <cliente_id>
+    Accept: application/json
+    ```
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://gravscale.apiblueprint.org/
+  variables: {}
+paths:
+  "/servers":
+    get:
+      summary: Listar servidores
+      description: ''
+      parameters:
+      - name: page
+        in: query
+        description: Número da página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 1
+      - name: limit
+        in: query
+        description: Quantidade de itens por página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 10
+      - name: status
+        in: query
+        description: Filtro de status do servidor.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Listarservidoresresponse"
+      deprecated: false
+    post:
+      summary: Criar servidor
+      description: ''
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Criarservidorrequest"
+            example:
+              model: ''
+              operating_system: ''
+              hostname: ''
+              raid: 1
+              password: ''
+        required: true
+      responses:
+        '201':
+          description: ''
+          headers:
+            Location:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: "/servers/1"
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Criarservidorresponse"
+      deprecated: false
+  "/servers/{id}":
+    get:
+      summary: Detalhes do servidor
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do Servidor.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Detalhesdoservidorresponse"
+        '404':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Detalhesdoservidorresponse1"
+      deprecated: false
+    delete:
+      summary: Remover servidor
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do Servidor.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+  "/servers/{id}/actions":
+    put:
+      summary: Gerenciar estado do servidor
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do Servidor.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Gerenciarestadodoservidorrequest"
+            example:
+              action: start
+        required: true
+      responses:
+        '204':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+  "/models":
+    get:
+      summary: Listar modelos disponíveis
+      description: <a name="models"></a>
+      parameters:
+      - name: page
+        in: query
+        description: Número da página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 1
+      - name: limit
+        in: query
+        description: Quantidade de itens por página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 10
+      - name: datacenter
+        in: query
+        description: Filtro de servidores por datacenter.
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Listarmodelosdispon%C3%ADveisresponse"
+      deprecated: false
+  "/os":
+    get:
+      summary: Listar sistemas operacionais
+      description: <a name="operating_systems"></a>
+      parameters:
+      - name: page
+        in: query
+        description: Número da página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 1
+      - name: limit
+        in: query
+        description: Quantidade de itens por página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 10
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Listarsistemasoperacionaisresponse"
+      deprecated: false
+  "/datacenters":
+    get:
+      summary: Listar datacenters
+      description: <a name="datacenters"></a>
+      parameters:
+      - name: page
+        in: query
+        description: Número da página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 1
+      - name: limit
+        in: query
+        description: Quantidade de itens por página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 10
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Listardatacentersresponse"
+      deprecated: false
+  "/keys":
+    get:
+      summary: Listar chaves SSH
+      description: ''
+      parameters:
+      - name: page
+        in: query
+        description: Número da página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 1
+      - name: limit
+        in: query
+        description: Quantidade de itens por página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 10
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ListarchavesSSHresponse"
+      deprecated: false
+    post:
+      summary: Criar chave SSH
+      description: ''
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CriarchaveSSHrequest"
+            example:
+              name: devuser1
+              public_key: ssh-rsa...
+        required: true
+      responses:
+        '201':
+          description: ''
+          headers:
+            Location:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: "/keys/1"
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CriarchaveSSHresponse"
+      deprecated: false
+  "/keys/{id}":
+    get:
+      summary: Detalhes da chave SSH
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID da chave SSH.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DetalhesdachaveSSHresponse"
+        '404':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DetalhesdachaveSSHresponse1"
+      deprecated: false
+    put:
+      summary: Atualizar chave SSH
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID da chave SSH.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AtualizarchaveSSHrequest"
+            example:
+              name: devuser1
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AtualizarchaveSSHresponse"
+      deprecated: false
+    delete:
+      summary: Remover chave SSH
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID da chave SSH.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+  "/scripts":
+    get:
+      summary: Listar init scripts
+      description: ''
+      parameters:
+      - name: page
+        in: query
+        description: Número da página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 1
+      - name: limit
+        in: query
+        description: Quantidade de itens por página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 10
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Listarinitscriptsresponse"
+      deprecated: false
+    post:
+      summary: Criar init script
+      description: ''
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Criarinitscriptrequest"
+            example:
+              name: install_packages
+              script: ''
+        required: true
+      responses:
+        '201':
+          description: ''
+          headers:
+            Location:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: "/init_scripts/1"
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Criarinitscriptresponse"
+      deprecated: false
+  "/scripts/{id}":
+    get:
+      summary: Detalhes do init script
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do init script.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Detalhesdoinitscriptresponse"
+        '404':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Detalhesdoinitscriptresponse1"
+      deprecated: false
+    put:
+      summary: Atualizar init script
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do init script.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Atualizarinitscriptrequest"
+            example:
+              name: install_packages
+              script: ''
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Atualizarinitscriptresponse"
+      deprecated: false
+    delete:
+      summary: Remover init script
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do init script.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+  "/quotas":
+    get:
+      summary: Listar Cotas
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ListarCotasresponse"
+      deprecated: false
+  "/ips":
+    get:
+      summary: Listar IPs
+      description: ''
+      parameters:
+      - name: page
+        in: query
+        description: Número da página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 1
+      - name: limit
+        in: query
+        description: Quantidade de itens por página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 10
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ListarIPsresponse"
+      deprecated: false
+  "/users":
+    get:
+      summary: Listar usuários
+      description: ''
+      parameters:
+      - name: page
+        in: query
+        description: Número da página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 1
+      - name: limit
+        in: query
+        description: Quantidade de itens por página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 10
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Listarusu%C3%A1riosresponse"
+      deprecated: false
+    post:
+      summary: Criar usuário
+      description: ''
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Criarusu%C3%A1riorequest"
+            example:
+              name: ''
+              role_id: 0
+        required: true
+      responses:
+        '201':
+          description: ''
+          headers:
+            Location:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: "/users/1"
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Criarusu%C3%A1rioresponse"
+      deprecated: false
+  "/users/{id}":
+    get:
+      summary: Detalhes do usuário
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do usuário.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Detalhesdousu%C3%A1rioresponse"
+        '404':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Detalhesdousu%C3%A1rioresponse1"
+      deprecated: false
+    put:
+      summary: Atualizar usuário
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do usuário.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Atualizarusu%C3%A1riorequest"
+            example:
+              name: ''
+              role_id: 0
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Atualizarusu%C3%A1rioresponse"
+      deprecated: false
+    delete:
+      summary: Remover usuário
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do usuário.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+  "/users/{id}/emails":
+    get:
+      summary: Listar emails
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do usuário.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Listaremailsresponse"
+      deprecated: false
+    post:
+      summary: Associar email
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do usuário.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Associaremailrequest"
+            example:
+              address: ''
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Associaremailresponse"
+      deprecated: false
+    delete:
+      summary: Remover email
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do email.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+  "/users/{id}/phones":
+    get:
+      summary: Listar telefones
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do usuário.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Listartelefonesresponse"
+      deprecated: false
+    post:
+      summary: Associar telefone
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do usuário.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Associartelefonerequest"
+            example:
+              ddd: 0
+              number: 0
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Associartelefoneresponse"
+      deprecated: false
+    delete:
+      summary: Remover telefone
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID do telefone.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+  "/roles":
+    get:
+      summary: Listar roles
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Listarrolesresponse"
+      deprecated: false
+  "/tokens":
+    get:
+      summary: Listar API keys
+      description: ''
+      parameters:
+      - name: user_id
+        in: query
+        description: ID do usuário.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+      - name: page
+        in: query
+        description: Número da página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 1
+      - name: limit
+        in: query
+        description: Quantidade de itens por página.
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: double
+          example: 10
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ListarAPIkeysresponse"
+      deprecated: false
+    post:
+      summary: Criar API key
+      description: ''
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CriarAPIkeyrequest"
+            example:
+              user_id: 0
+              name: devuser1
+        required: true
+      responses:
+        '201':
+          description: ''
+          headers:
+            Location:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: "/tokens/1"
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CriarAPIkeyresponse"
+      deprecated: false
+  "/tokens/{id}":
+    get:
+      summary: Detalhes da API key
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID da API key.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DetalhesdaAPIkeyresponse"
+        '404':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DetalhesdaAPIkeyresponse1"
+      deprecated: false
+    put:
+      summary: Atualizar API key
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID da API key.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AtualizarAPIkeyrequest"
+            example:
+              name: devuser1
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AtualizarAPIkeyresponse"
+      deprecated: false
+    delete:
+      summary: Remover API key
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        description: ID da API key.
+        required: true
+        style: simple
+        schema:
+          type: number
+          format: double
+      responses:
+        '204':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+components:
+  schemas:
+    Listarservidoresresponse:
+      title: Listarservidoresresponse
+      required:
+      - servers
+      - pages
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Server"
+          description: ''
+        pages:
+          "$ref": "#/components/schemas/Pages"
+      example:
+        servers:
+        - id: 1
+          hostname: gravscale
+          model:
+            id: 1
+            slug: oferta-100
+            name: Intel Xeon 16C 64GB - 2 x 480 SSD
+            datacenter: sp1
+          operating_system:
+            id: 1
+            slug: ubuntu_20_04
+            name: Ubuntu 20.04 LTS x64
+          datacenter:
+            id: 1
+            slug: sp1
+            name: Brazil - Sao Paulo 1
+          ips:
+          - id: 1
+            address: 192.168.100.1
+            type: Static
+            interface: eth0
+            server_id: 1
+            created_at: '2020-08-05T08:40:51.620Z'
+          status: Running
+          created_at: '2020-08-05T08:40:51.620Z'
+        pages:
+          count: 1
+          total: 10
+    Server:
+      title: Server
+      required:
+      - id
+      - hostname
+      - model
+      - operating_system
+      - datacenter
+      - ips
+      - status
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        hostname:
+          type: string
+        model:
+          "$ref": "#/components/schemas/Model"
+        operating_system:
+          "$ref": "#/components/schemas/OperatingSystem"
+        datacenter:
+          "$ref": "#/components/schemas/Datacenter"
+        ips:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Ip"
+          description: ''
+        status:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        hostname: gravscale
+        model:
+          id: 1
+          slug: oferta-100
+          name: Intel Xeon 16C 64GB - 2 x 480 SSD
+          datacenter: sp1
+        operating_system:
+          id: 1
+          slug: ubuntu_20_04
+          name: Ubuntu 20.04 LTS x64
+        datacenter:
+          id: 1
+          slug: sp1
+          name: Brazil - Sao Paulo 1
+        ips:
+        - id: 1
+          address: 192.168.100.1
+          type: Static
+          interface: eth0
+          server_id: 1
+          created_at: '2020-08-05T08:40:51.620Z'
+        status: Running
+        created_at: '2020-08-05T08:40:51.620Z'
+    Model:
+      title: Model
+      required:
+      - id
+      - slug
+      - name
+      - datacenter
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        slug:
+          type: string
+        name:
+          type: string
+        datacenter:
+          type: string
+      example:
+        id: 1
+        slug: oferta-100
+        name: Intel Xeon 16C 64GB - 2 x 480 SSD
+        datacenter: sp1
+    OperatingSystem:
+      title: OperatingSystem
+      required:
+      - id
+      - slug
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        slug:
+          type: string
+        name:
+          type: string
+      example:
+        id: 1
+        slug: ubuntu_20_04
+        name: Ubuntu 20.04 LTS x64
+    Datacenter:
+      title: Datacenter
+      required:
+      - id
+      - slug
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        slug:
+          type: string
+        name:
+          type: string
+      example:
+        id: 1
+        slug: sp1
+        name: Brazil - Sao Paulo 1
+    Ip:
+      title: Ip
+      required:
+      - id
+      - address
+      - type
+      - interface
+      - server_id
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        address:
+          type: string
+        type:
+          type: string
+        interface:
+          type: string
+        server_id:
+          type: integer
+          format: int32
+        created_at:
+          type: string
+      example:
+        id: 1
+        address: 192.168.100.1
+        type: Static
+        interface: eth0
+        server_id: 1
+        created_at: '2020-08-05T08:40:51.620Z'
+    Pages:
+      title: Pages
+      required:
+      - count
+      - total
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        total:
+          type: integer
+          format: int32
+      example:
+        count: 1
+        total: 10
+    Criarservidorrequest:
+      title: Criarservidorrequest
+      required:
+      - model
+      - operating_system
+      - hostname
+      - raid
+      - password
+      type: object
+      properties:
+        model:
+          type: string
+          description: Slug do modelo do servidor. Veja [/models](#models).
+        operating_system:
+          type: string
+          description: Slug do sistema operacional. Veja [/operating_systems](#operating_systems).
+        hostname:
+          type: string
+          description: Hostname do servidor.
+        raid:
+          "$ref": "#/components/schemas/raid"
+        password:
+          type: string
+          description: Password para autenticação.
+        ssh_key:
+          type: number
+          description: ID da chave SSH para deploy.
+        init_script:
+          type: number
+          description: ID do init script para deploy.
+    raid:
+      title: raid
+      enum:
+      - 1
+      - 5
+      - 6
+      type: integer
+      description: Tipo de Raid.
+      example: 1
+    Criarservidorresponse:
+      title: Criarservidorresponse
+      required:
+      - id
+      - hostname
+      - model
+      - operating_system
+      - datacenter
+      - ips
+      - status
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        hostname:
+          type: string
+        model:
+          "$ref": "#/components/schemas/Model"
+        operating_system:
+          "$ref": "#/components/schemas/OperatingSystem"
+        datacenter:
+          "$ref": "#/components/schemas/Datacenter"
+        ips:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Ip"
+          description: ''
+        status:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        hostname: gravscale
+        model:
+          id: 1
+          slug: oferta-100
+          name: Intel Xeon 16C 64GB - 2 x 480 SSD
+          datacenter: sp1
+        operating_system:
+          id: 1
+          slug: ubuntu_20_04
+          name: Ubuntu 20.04 LTS x64
+        datacenter:
+          id: 1
+          slug: sp1
+          name: Brazil - Sao Paulo 1
+        ips:
+        - id: 1
+          address: 192.168.100.1
+          type: Static
+          interface: eth0
+          server_id: 1
+          created_at: '2020-08-05T08:40:51.620Z'
+        status: running
+        created_at: '2020-08-05T08:40:51.620Z'
+    Detalhesdoservidorresponse:
+      title: Detalhesdoservidorresponse
+      required:
+      - id
+      - hostname
+      - model
+      - operating_system
+      - datacenter
+      - ips
+      - status
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        hostname:
+          type: string
+        model:
+          "$ref": "#/components/schemas/Model"
+        operating_system:
+          "$ref": "#/components/schemas/OperatingSystem"
+        datacenter:
+          "$ref": "#/components/schemas/Datacenter"
+        ips:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Ip"
+          description: ''
+        status:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        hostname: gravscale
+        model:
+          id: 1
+          slug: oferta-100
+          name: Intel Xeon 16C 64GB - 2 x 480 SSD
+          datacenter: sp1
+        operating_system:
+          id: 1
+          slug: ubuntu_20_04
+          name: Ubuntu 20.04 LTS x64
+        datacenter:
+          id: 1
+          slug: sp1
+          name: Brazil - Sao Paulo 1
+        ips:
+        - id: 1
+          address: 192.168.100.1
+          type: Static
+          interface: eth0
+          server_id: 1
+          created_at: '2020-08-05T08:40:51.620Z'
+        status: running
+        created_at: '2020-08-05T08:40:51.620Z'
+    Detalhesdoservidorresponse1:
+      title: Detalhesdoservidorresponse1
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: Servidor não encontrado.
+    Gerenciarestadodoservidorrequest:
+      title: Gerenciarestadodoservidorrequest
+      required:
+      - action
+      type: object
+      properties:
+        action:
+          "$ref": "#/components/schemas/action"
+    action:
+      title: action
+      enum:
+      - start
+      - reboot
+      - shutdown
+      type: string
+      description: Ação que deve ser realizada.
+    Listarmodelosdisponíveisresponse:
+      title: Listarmodelosdisponíveisresponse
+      required:
+      - models
+      - pages
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Model3"
+          description: ''
+        pages:
+          "$ref": "#/components/schemas/Pages"
+      example:
+        models:
+        - id: 1
+          slug: oferta-100
+          name: Intel Xeon 16C 64GB - 2 x 480 SSD
+          datacenter: sp1
+          price: 1000
+          description: "..."
+        pages:
+          count: 1
+          total: 10
+    Model3:
+      title: Model3
+      required:
+      - id
+      - slug
+      - name
+      - datacenter
+      - price
+      - description
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        slug:
+          type: string
+        name:
+          type: string
+        datacenter:
+          type: string
+        price:
+          type: integer
+          format: int32
+        description:
+          type: string
+      example:
+        id: 1
+        slug: oferta-100
+        name: Intel Xeon 16C 64GB - 2 x 480 SSD
+        datacenter: sp1
+        price: 1000
+        description: "..."
+    Listarsistemasoperacionaisresponse:
+      title: Listarsistemasoperacionaisresponse
+      required:
+      - operating_systems
+      - pages
+      type: object
+      properties:
+        operating_systems:
+          type: array
+          items:
+            "$ref": "#/components/schemas/OperatingSystem3"
+          description: ''
+        pages:
+          "$ref": "#/components/schemas/Pages"
+      example:
+        operating_systems:
+        - id: 1
+          slug: ubuntu_20_04
+          name: Ubuntu 20.04 LTS x64
+          price: 0
+        pages:
+          count: 1
+          total: 10
+    OperatingSystem3:
+      title: OperatingSystem3
+      required:
+      - id
+      - slug
+      - name
+      - price
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        slug:
+          type: string
+        name:
+          type: string
+        price:
+          type: integer
+          format: int32
+      example:
+        id: 1
+        slug: ubuntu_20_04
+        name: Ubuntu 20.04 LTS x64
+        price: 0
+    Listardatacentersresponse:
+      title: Listardatacentersresponse
+      required:
+      - datacenters
+      - pages
+      type: object
+      properties:
+        datacenters:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Datacenter"
+          description: ''
+        pages:
+          "$ref": "#/components/schemas/Pages"
+      example:
+        datacenters:
+        - id: 1
+          slug: sp1
+          name: Brazil - São Paulo 1
+        pages:
+          count: 1
+          total: 10
+    ListarchavesSSHresponse:
+      title: ListarchavesSSHresponse
+      required:
+      - keys
+      - pages
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Key"
+          description: ''
+        pages:
+          "$ref": "#/components/schemas/Pages"
+      example:
+        keys:
+        - id: 1
+          name: devuser1
+          public_key: ssh-rsa...
+          created_at: '2020-08-05T08:40:51.620Z'
+        pages:
+          count: 1
+          total: 10
+    Key:
+      title: Key
+      required:
+      - id
+      - name
+      - public_key
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        public_key:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: devuser1
+        public_key: ssh-rsa...
+        created_at: '2020-08-05T08:40:51.620Z'
+    CriarchaveSSHrequest:
+      title: CriarchaveSSHrequest
+      required:
+      - name
+      - public_key
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome da chave SSH.
+          example: devuser1
+        public_key:
+          type: string
+          description: Chave SSH pública.
+          example: ssh-rsa...
+    CriarchaveSSHresponse:
+      title: CriarchaveSSHresponse
+      required:
+      - id
+      - name
+      - public_key
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        public_key:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: devuser1
+        public_key: ssh-rsa...
+        created_at: '2020-08-05T08:40:51.620Z'
+    DetalhesdachaveSSHresponse:
+      title: DetalhesdachaveSSHresponse
+      required:
+      - id
+      - name
+      - public_key
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        public_key:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: devuser1
+        public_key: ssh-rsa...
+        created_at: '2020-08-05T08:40:51.620Z'
+    DetalhesdachaveSSHresponse1:
+      title: DetalhesdachaveSSHresponse1
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: Chave SSH não encontrada.
+    AtualizarchaveSSHrequest:
+      title: AtualizarchaveSSHrequest
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome da chave SSH.
+          example: devuser1
+    AtualizarchaveSSHresponse:
+      title: AtualizarchaveSSHresponse
+      required:
+      - id
+      - name
+      - public_key
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        public_key:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: devuser1
+        public_key: ssh-rsa...
+        created_at: '2020-08-05T08:40:51.620Z'
+    Listarinitscriptsresponse:
+      title: Listarinitscriptsresponse
+      required:
+      - init_scripts
+      - pages
+      type: object
+      properties:
+        init_scripts:
+          type: array
+          items:
+            "$ref": "#/components/schemas/InitScript"
+          description: ''
+        pages:
+          "$ref": "#/components/schemas/Pages"
+      example:
+        init_scripts:
+        - id: 1
+          name: install_packages
+          script: "..."
+          created_at: '2020-08-05T08:40:51.620Z'
+        pages:
+          count: 1
+          total: 10
+    InitScript:
+      title: InitScript
+      required:
+      - id
+      - name
+      - script
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        script:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: install_packages
+        script: "..."
+        created_at: '2020-08-05T08:40:51.620Z'
+    Criarinitscriptrequest:
+      title: Criarinitscriptrequest
+      required:
+      - name
+      - script
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome do script.
+          example: install_packages
+        script:
+          type: string
+          description: O conteúdo do script.
+    Criarinitscriptresponse:
+      title: Criarinitscriptresponse
+      required:
+      - id
+      - name
+      - script
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        script:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: install_packages
+        script: "..."
+        created_at: '2020-08-05T08:40:51.620Z'
+    Detalhesdoinitscriptresponse:
+      title: Detalhesdoinitscriptresponse
+      required:
+      - id
+      - name
+      - script
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        script:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: install_packages
+        script: "..."
+        created_at: '2020-08-05T08:40:51.620Z'
+    Detalhesdoinitscriptresponse1:
+      title: Detalhesdoinitscriptresponse1
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: Init script não encontrado.
+    Atualizarinitscriptrequest:
+      title: Atualizarinitscriptrequest
+      required:
+      - name
+      - script
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome do script.
+          example: install_packages
+        script:
+          type: string
+          description: O conteúdo do script.
+    Atualizarinitscriptresponse:
+      title: Atualizarinitscriptresponse
+      required:
+      - id
+      - name
+      - script
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        script:
+          type: string
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: install_packages
+        script: "..."
+        created_at: '2020-08-05T08:40:51.620Z'
+    ListarCotasresponse:
+      title: ListarCotasresponse
+      required:
+      - servers
+      - ssh_keys
+      - init_scripts
+      - user
+      - email
+      - phone
+      type: object
+      properties:
+        servers:
+          type: integer
+          format: int32
+        ssh_keys:
+          type: integer
+          format: int32
+        init_scripts:
+          type: integer
+          format: int32
+        user:
+          type: integer
+          format: int32
+        email:
+          type: integer
+          format: int32
+        phone:
+          type: integer
+          format: int32
+      example:
+        servers: 2
+        ssh_keys: 10
+        init_scripts: 10
+        user: 10
+        email: 50
+        phone: 50
+    ListarIPsresponse:
+      title: ListarIPsresponse
+      required:
+      - ips
+      - pages
+      type: object
+      properties:
+        ips:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Ip3"
+          description: ''
+        pages:
+          "$ref": "#/components/schemas/Pages"
+      example:
+        ips:
+        - id: 1
+          address: 192.168.100.1
+          server:
+            id: 1
+            hostname: gravscale
+          created_at: '2020-08-05T08:40:51.620Z'
+        pages:
+          count: 1
+          total: 10
+    Ip3:
+      title: Ip3
+      required:
+      - id
+      - address
+      - server
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        address:
+          type: string
+        server:
+          "$ref": "#/components/schemas/Server1"
+        created_at:
+          type: string
+      example:
+        id: 1
+        address: 192.168.100.1
+        server:
+          id: 1
+          hostname: gravscale
+        created_at: '2020-08-05T08:40:51.620Z'
+    Server1:
+      title: Server1
+      required:
+      - id
+      - hostname
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        hostname:
+          type: string
+      example:
+        id: 1
+        hostname: gravscale
+    Listarusuáriosresponse:
+      title: Listarusuáriosresponse
+      required:
+      - users
+      - pages
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            "$ref": "#/components/schemas/User"
+          description: ''
+        pages:
+          "$ref": "#/components/schemas/Pages"
+      example:
+        users:
+        - id: 1
+          name: Gravscale
+          description: Contato primário
+          emails:
+          - id: 1
+            address: contato@gravscale.com
+          phones:
+          - id: 1
+            ddd: 99
+            number: 999999999
+          role:
+            id: 1
+            name: Owner
+          created_at: '2020-08-05T08:40:51.620Z'
+        pages:
+          count: 1
+          total: 10
+    User:
+      title: User
+      required:
+      - id
+      - name
+      - description
+      - emails
+      - phones
+      - role
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+        emails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Email"
+          description: ''
+        phones:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Phone"
+          description: ''
+        role:
+          "$ref": "#/components/schemas/Role"
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: Gravscale
+        description: Contato primário
+        emails:
+        - id: 1
+          address: contato@gravscale.com
+        phones:
+        - id: 1
+          ddd: 99
+          number: 999999999
+        role:
+          id: 1
+          name: Owner
+        created_at: '2020-08-05T08:40:51.620Z'
+    Email:
+      title: Email
+      required:
+      - id
+      - address
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        address:
+          type: string
+      example:
+        id: 1
+        address: contato@gravscale.com
+    Phone:
+      title: Phone
+      required:
+      - id
+      - ddd
+      - number
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        ddd:
+          type: integer
+          format: int32
+        number:
+          type: integer
+          format: int32
+      example:
+        id: 1
+        ddd: 99
+        number: 999999999
+    Role:
+      title: Role
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+      example:
+        id: 1
+        name: Owner
+    Criarusuáriorequest:
+      title: Criarusuáriorequest
+      required:
+      - name
+      - role_id
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome do usuário.
+        role_id:
+          type: number
+          description: ID da role do usuário.
+        description:
+          type: string
+          description: Descrição do usuário.
+    Criarusuárioresponse:
+      title: Criarusuárioresponse
+      required:
+      - id
+      - name
+      - description
+      - role
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+        role:
+          "$ref": "#/components/schemas/Role"
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: Gravscale
+        description: Contato primário
+        role:
+          id: 1
+          name: Owner
+        created_at: '2020-08-05T08:40:51.620Z'
+    Detalhesdousuárioresponse:
+      title: Detalhesdousuárioresponse
+      required:
+      - id
+      - name
+      - description
+      - emails
+      - phones
+      - role
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+        emails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Email"
+          description: ''
+        phones:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Phone"
+          description: ''
+        role:
+          "$ref": "#/components/schemas/Role"
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: Gravscale
+        description: Contato primário
+        emails:
+        - id: 1
+          address: contato@gravscale.com
+        phones:
+        - id: 1
+          ddd: 99
+          number: 999999999
+        role:
+          id: 1
+          name: Owner
+        created_at: '2020-08-05T08:40:51.620Z'
+    Detalhesdousuárioresponse1:
+      title: Detalhesdousuárioresponse1
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: Usuário não encontrado.
+    Atualizarusuáriorequest:
+      title: Atualizarusuáriorequest
+      required:
+      - name
+      - role_id
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome do usuário.
+        role_id:
+          type: number
+          description: ID da role do usuário.
+        description:
+          type: string
+          description: Descrição do usuário.
+    Atualizarusuárioresponse:
+      title: Atualizarusuárioresponse
+      required:
+      - id
+      - name
+      - description
+      - role
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+        role:
+          "$ref": "#/components/schemas/Role"
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: Gravscale
+        description: Contato primário
+        role:
+          id: 1
+          name: Owner
+        created_at: '2020-08-05T08:40:51.620Z'
+    Listaremailsresponse:
+      title: Listaremailsresponse
+      required:
+      - emails
+      type: object
+      properties:
+        emails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Email"
+          description: ''
+      example:
+        emails:
+        - id: 1
+          address: contato@gravscale.com
+    Associaremailrequest:
+      title: Associaremailrequest
+      required:
+      - address
+      type: object
+      properties:
+        address:
+          type: string
+          description: Endereço de email do usuário.
+    Associaremailresponse:
+      title: Associaremailresponse
+      required:
+      - id
+      - address
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        address:
+          type: string
+      example:
+        id: 1
+        address: contato@gravscale.com
+    Listartelefonesresponse:
+      title: Listartelefonesresponse
+      required:
+      - telefones
+      type: object
+      properties:
+        telefones:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Telefone"
+          description: ''
+      example:
+        telefones:
+        - id: 1
+          ddd: 99
+          number: 999999999
+    Telefone:
+      title: Telefone
+      required:
+      - id
+      - ddd
+      - number
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        ddd:
+          type: integer
+          format: int32
+        number:
+          type: integer
+          format: int32
+      example:
+        id: 1
+        ddd: 99
+        number: 999999999
+    Associartelefonerequest:
+      title: Associartelefonerequest
+      required:
+      - ddd
+      - number
+      type: object
+      properties:
+        ddd:
+          type: number
+          description: DDD do telefone do usuário.
+        number:
+          type: number
+          description: Número do telefone do usuário.
+    Associartelefoneresponse:
+      title: Associartelefoneresponse
+      required:
+      - id
+      - ddd
+      - number
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        ddd:
+          type: integer
+          format: int32
+        number:
+          type: integer
+          format: int32
+      example:
+        id: 1
+        ddd: 99
+        number: 999999999
+    Listarrolesresponse:
+      title: Listarrolesresponse
+      required:
+      - roles
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Role"
+          description: ''
+      example:
+        roles:
+        - id: 1
+          name: Owner
+        - id: 2
+          name: Admin
+        - id: 3
+          name: Billing
+        - id: 4
+          name: Technical
+    ListarAPIkeysresponse:
+      title: ListarAPIkeysresponse
+      required:
+      - tokens
+      - pages
+      type: object
+      properties:
+        tokens:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Token"
+          description: ''
+        pages:
+          "$ref": "#/components/schemas/Pages"
+      example:
+        tokens:
+        - id: 1
+          name: devuser1
+          token: "..."
+          last_used: 
+          created_at: '2020-08-05T08:40:51.620Z'
+        pages:
+          count: 1
+          total: 10
+    Token:
+      title: Token
+      required:
+      - id
+      - name
+      - token
+      - last_used
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        token:
+          type: string
+        last_used:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: devuser1
+        token: "..."
+        last_used: 
+        created_at: '2020-08-05T08:40:51.620Z'
+    CriarAPIkeyrequest:
+      title: CriarAPIkeyrequest
+      required:
+      - user_id
+      - name
+      type: object
+      properties:
+        user_id:
+          type: number
+          description: ID do usuário.
+        name:
+          type: string
+          description: Nome da API key.
+          example: devuser1
+    CriarAPIkeyresponse:
+      title: CriarAPIkeyresponse
+      required:
+      - id
+      - name
+      - token
+      - last_used
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        token:
+          type: string
+        last_used:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: devuser1
+        token: "..."
+        last_used: 
+        created_at: '2020-08-05T08:40:51.620Z'
+    DetalhesdaAPIkeyresponse:
+      title: DetalhesdaAPIkeyresponse
+      required:
+      - id
+      - name
+      - token
+      - last_used
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        token:
+          type: string
+        last_used:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: devuser1
+        token: "..."
+        last_used: 
+        created_at: '2020-08-05T08:40:51.620Z'
+    DetalhesdaAPIkeyresponse1:
+      title: DetalhesdaAPIkeyresponse1
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: API key não encontrada.
+    AtualizarAPIkeyrequest:
+      title: AtualizarAPIkeyrequest
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome da API key.
+          example: devuser1
+    AtualizarAPIkeyresponse:
+      title: AtualizarAPIkeyresponse
+      required:
+      - id
+      - name
+      - token
+      - last_used
+      - created_at
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        token:
+          type: string
+        last_used:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+      example:
+        id: 1
+        name: devuser1
+        token: "..."
+        last_used: 
+        created_at: '2020-08-05T08:40:51.620Z'
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+tags: []

@@ -1,2 +1,4 @@
 def {{verb}}({{param_text}}):
-    return "Hello World", 200
+    {% if verb == "delete" %}return "Resource deleted", 204
+    {% elif verb == "delete" %}return "Resource deleted", 204
+    {% else %}return "Resource result here", 200{% endif %}

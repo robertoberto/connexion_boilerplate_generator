@@ -1,4 +1,5 @@
 import json
+import yaml
 import pprint
 import re
 import os
@@ -6,15 +7,35 @@ import touch
 from jinja2 import Template
 import jinja2
 
+try:
+    from yaml import CLoader as Loader, CDumper as Dumper
+except ImportError:
+    from yaml import Loader, Dumper
+
 # declaring only, not change here
 DEBUG=None
 TEMPLATEDIR='templates'
 
 def load(filename):
-    with open(filename, "r") as readfile:
-        data = json.load(readfile)
-        return data
-    return {}
+    try:
+        with open(filename) as f:
+            s = f.read()
+    except IOError as x:
+        if x.errno == errno.ENOENT:
+            print(filename, '- does not exist')
+        elif x.errno == errno.EACCES:
+            print(filename, '- cannot be read')
+        else:
+            print(filename, '- some other error')
+
+    data = {}
+    if filename.endswith(".json"):
+        data = json.loads(s)
+
+    if filename.endswith(".yaml"):
+        data = yaml.load(s, Loader=Loader)
+
+    return data
 
 def get_restyresolver(folder, path, method):
     verb        = method
@@ -247,7 +268,7 @@ def create_all_files(destdir, methods, apifile="api.py"):
                 fileout = apifileout
 
             tree_verb = tree[-1]
-            #print("verb: ", tree_verb)
+            print("verb: ", tree_verb)
             verb_text = create_verb(verb=tree_verb, params=method['parameters'])
             add_savefiles(savefiles, fileout, "verb", verb_text)
 
@@ -275,7 +296,7 @@ def main(specfile, destdir, apifile="api.py", restyresolver=None, debug=False, t
 
 if __name__ == '__main__':
     # with Automatic Routing
-    main('openapi_3.0_example.json', destdir='generated', restyresolver='api', debug=False, templatedir='templates')
+    main('openapi_3.0_example.yaml', destdir='generated', restyresolver='api', debug=False, templatedir='templates')
     # without Automatic Routing
     #main('openapi_3.0_example.json', destdir='generated', debug=False, templatedir='templates')
 
