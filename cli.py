@@ -247,7 +247,7 @@ def create_all_files(destdir, methods, apifile="api.py"):
                 fileout = apifileout
 
             tree_verb = tree[-1]
-            print("verb: ", tree_verb)
+            #print("verb: ", tree_verb)
             verb_text = create_verb(verb=tree_verb, params=method['parameters'])
             add_savefiles(savefiles, fileout, "verb", verb_text)
 
@@ -279,3 +279,5 @@ if __name__ == '__main__':
     # without Automatic Routing
     #main('openapi_3.0_example.json', destdir='generated', debug=False, templatedir='templates')
 
+
+    
