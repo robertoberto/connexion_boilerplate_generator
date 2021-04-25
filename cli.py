@@ -207,6 +207,22 @@ def create_verb(verb, params):
 
     return verb_text
 
+def create_api(importsfile, apifile):
+    f = open(importsfile, "r")
+    imports = f.read()
+    f.close()
+    
+    templateLoader = jinja2.FileSystemLoader(TEMPLATEDIR)
+    templateEnv = jinja2.Environment(loader=templateLoader)
+    TEMPLATE_FILE = "api.j2"
+    template = templateEnv.get_template(TEMPLATE_FILE)
+    api_text = template.render(imports=imports)
+
+    f = open(apifile, "w")
+    f.write(api_text)
+    f.close()
+
+
 def add_savefiles(savefiles, filename, verbtype, content):
     if filename not in savefiles:
         savefiles[filename] = {'import' : [], 'verb' : []}
@@ -214,12 +230,12 @@ def add_savefiles(savefiles, filename, verbtype, content):
     if content not in savefiles[filename][verbtype]:
         savefiles[filename][verbtype].append(content)
 
-def create_all_files(destdir, methods, apifile="api.py"):
+def create_all_files(destdir, methods, apifile="app.py"):
     if os.path.isdir(destdir) == False:
         os.mkdir(destdir)
 
     destdir = re.sub(r'/$', r'', destdir)
-    apifileout = "{destdir}/{apifile}".format(destdir=destdir, apifile=apifile)
+    apifileout = "{destdir}/imports.{apifile}".format(destdir=destdir, apifile=apifile)
 
     savefiles = {}
 
@@ -280,7 +296,7 @@ def create_all_files(destdir, methods, apifile="api.py"):
 
 
 
-def main(specfile, destdir, apifile="api.py", restyresolver=None, debug=False, templatedir='templates'):
+def main(specfile, destdir, apifile="app.py", restyresolver=None, debug=False, templatedir='templates'):
     global DEBUG
     DEBUG=debug
 
@@ -289,6 +305,7 @@ def main(specfile, destdir, apifile="api.py", restyresolver=None, debug=False, t
 
     methods = get_all_methods(specfile, restyresolver)
     create_all_files(destdir, methods)
+    create_api(destdir + "/imports." + apifile, destdir + "/" + apifile)
 
     #pprint.pprint(j)
 
