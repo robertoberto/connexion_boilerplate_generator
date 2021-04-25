@@ -1,7 +1,6 @@
 # Connextion Boilerplate Generator 
 
-Generates python API boilerplate code from openapi 3.0 JSON to [Connextion framework](https://github.com/zalando/connexion)
-You can convert openapi YAML to JSON with any utilitary.
+Generates python API boilerplate code from openapi 3.0 JSON or YAML to [Connextion framework](https://github.com/zalando/connexion)
 
 
 You can use virtualenv or directly install pip dependencies:
