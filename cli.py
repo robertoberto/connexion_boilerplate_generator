@@ -50,15 +50,23 @@ def get_restyresolver(folder, path, method):
     if "{" in path:
         path_new = re.sub(r'\{.*?\}', r'.', path_new)
 
-    path_new = re.sub(r'/', r'', path_new)
-    path_new = re.sub(r'\.$', r'', path_new)
+    path_new = re.sub(r'/', r'.', path_new)
+    path_new = re.sub(r'^\.+', r'', path_new)
+    path_new = re.sub(r'\.+$', r'', path_new)
+    path_new = re.sub(r'\.{2,}', r'.', path_new)
 
-    return {
+
+    resolver = {
         'operationId'  : "{folder}.{path_new}.{verb}".format(folder=folder, path_new=path_new, verb=verb),
         'folder'       : folder,
         'file'         : path_new,
         'verb'         : verb,
     }
+
+    if DEBUG:
+        pprint.pprint(resolver)
+
+    return resolver
 
 
 def get_method_data(restyresolver, path, method, methodspec):
@@ -163,7 +171,7 @@ def write_savefiles(savefiles):
         if not f.endswith(".py"):
             nfiles.append(f)
     
-    nfiles.append('generated/api/users')
+    #nfiles.append('generated/api/users')
     nfiles = sorted(list(set(nfiles)))
     nfiles = nfiles[1:]
 
@@ -260,7 +268,6 @@ def create_all_files(destdir, methods, apifile="app.py"):
 
             tree_dirs = tree[:-1]
 
-
             if len(tree_dirs) > 0:
                 tree_dirs_path = destdir
                 tree_dirs_n = 0
@@ -284,7 +291,9 @@ def create_all_files(destdir, methods, apifile="app.py"):
                 fileout = apifileout
 
             tree_verb = tree[-1]
-            print("verb: ", tree_verb)
+            if DEBUG:
+                print("verb: ", tree_verb)
+
             verb_text = create_verb(verb=tree_verb, params=method['parameters'])
             add_savefiles(savefiles, fileout, "verb", verb_text)
 
@@ -313,9 +322,9 @@ def main(specfile, destdir, apifile="app.py", restyresolver=None, debug=False, t
 
 if __name__ == '__main__':
     # with Automatic Routing
-    main('openapi_3.0_example.yaml', destdir='generated', restyresolver='api', debug=False, templatedir='templates')
+    main('openapi.json', destdir='generated', restyresolver='api', debug=False, templatedir='templates')
     # without Automatic Routing
-    #main('openapi_3.0_example.json', destdir='generated', debug=False, templatedir='templates')
+    #main('openapi.json', destdir='generated', debug=False, templatedir='templates')
 
 
     

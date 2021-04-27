@@ -13,828 +13,7 @@
     }
   ],
   "paths" : {
-    "/servers" : {
-      "get" : {
-        "summary" : "Listar servidores",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "page",
-            "in" : "query",
-            "description" : "Número da página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 1
-            }
-          },
-          {
-            "name" : "limit",
-            "in" : "query",
-            "description" : "Quantidade de itens por página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 10
-            }
-          },
-          {
-            "name" : "status",
-            "in" : "query",
-            "description" : "Filtro de status do servidor.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "type" : "string"
-              }
-            }
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Listarservidoresresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      },
-      "post" : {
-        "summary" : "Criar servidor",
-        "description" : "",
-        "parameters" : [],
-        "requestBody" : {
-          "description" : "",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Criarservidorrequest"
-              },
-              "example" : {
-                "model" : "",
-                "operating_system" : "",
-                "hostname" : "",
-                "raid" : 1,
-                "password" : ""
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "201" : {
-            "description" : "",
-            "headers" : {
-              "Location" : {
-                "content" : {
-                  "text/plain" : {
-                    "schema" : {
-                      "type" : "string"
-                    },
-                    "example" : "/servers/1"
-                  }
-                }
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Criarservidorresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/servers/{id}" : {
-      "get" : {
-        "summary" : "Detalhes do servidor",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID do Servidor.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Detalhesdoservidorresponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Detalhesdoservidorresponse1"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      },
-      "delete" : {
-        "summary" : "Remover servidor",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID do Servidor.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "responses" : {
-          "204" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {}
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/servers/{id}/actions" : {
-      "put" : {
-        "summary" : "Gerenciar estado do servidor",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID do Servidor.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "requestBody" : {
-          "description" : "",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Gerenciarestadodoservidorrequest"
-              },
-              "example" : {
-                "action" : "start"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "204" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {}
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/models" : {
-      "get" : {
-        "summary" : "Listar modelos disponíveis",
-        "description" : "<a name=\"models\"></a>",
-        "parameters" : [
-          {
-            "name" : "page",
-            "in" : "query",
-            "description" : "Número da página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 1
-            }
-          },
-          {
-            "name" : "limit",
-            "in" : "query",
-            "description" : "Quantidade de itens por página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 10
-            }
-          },
-          {
-            "name" : "datacenter",
-            "in" : "query",
-            "description" : "Filtro de servidores por datacenter.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "type" : "string"
-              }
-            }
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Listarmodelosdispon%C3%ADveisresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/os" : {
-      "get" : {
-        "summary" : "Listar sistemas operacionais",
-        "description" : "<a name=\"operating_systems\"></a>",
-        "parameters" : [
-          {
-            "name" : "page",
-            "in" : "query",
-            "description" : "Número da página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 1
-            }
-          },
-          {
-            "name" : "limit",
-            "in" : "query",
-            "description" : "Quantidade de itens por página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 10
-            }
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Listarsistemasoperacionaisresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/datacenters" : {
-      "get" : {
-        "summary" : "List datacenters",
-        "description" : "List datacenters available.",
-        "parameters" : [],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Listardatacentersresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/keys" : {
-      "get" : {
-        "summary" : "Listar chaves SSH",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "page",
-            "in" : "query",
-            "description" : "Número da página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 1
-            }
-          },
-          {
-            "name" : "limit",
-            "in" : "query",
-            "description" : "Quantidade de itens por página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 10
-            }
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ListarchavesSSHresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      },
-      "post" : {
-        "summary" : "Criar chave SSH",
-        "description" : "",
-        "parameters" : [],
-        "requestBody" : {
-          "description" : "",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/CriarchaveSSHrequest"
-              },
-              "example" : {
-                "name" : "devuser1",
-                "public_key" : "ssh-rsa..."
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "201" : {
-            "description" : "",
-            "headers" : {
-              "Location" : {
-                "content" : {
-                  "text/plain" : {
-                    "schema" : {
-                      "type" : "string"
-                    },
-                    "example" : "/keys/1"
-                  }
-                }
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/CriarchaveSSHresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/keys/{id}" : {
-      "get" : {
-        "summary" : "Detalhes da chave SSH",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID da chave SSH.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/DetalhesdachaveSSHresponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/DetalhesdachaveSSHresponse1"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      },
-      "put" : {
-        "summary" : "Atualizar chave SSH",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID da chave SSH.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "requestBody" : {
-          "description" : "",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/AtualizarchaveSSHrequest"
-              },
-              "example" : {
-                "name" : "devuser1"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/AtualizarchaveSSHresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      },
-      "delete" : {
-        "summary" : "Remover chave SSH",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID da chave SSH.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "responses" : {
-          "204" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {}
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/scripts" : {
-      "get" : {
-        "summary" : "Listar init scripts",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "page",
-            "in" : "query",
-            "description" : "Número da página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 1
-            }
-          },
-          {
-            "name" : "limit",
-            "in" : "query",
-            "description" : "Quantidade de itens por página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 10
-            }
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Listarinitscriptsresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      },
-      "post" : {
-        "summary" : "Criar init script",
-        "description" : "",
-        "parameters" : [],
-        "requestBody" : {
-          "description" : "",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Criarinitscriptrequest"
-              },
-              "example" : {
-                "name" : "install_packages",
-                "script" : ""
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "201" : {
-            "description" : "",
-            "headers" : {
-              "Location" : {
-                "content" : {
-                  "text/plain" : {
-                    "schema" : {
-                      "type" : "string"
-                    },
-                    "example" : "/init_scripts/1"
-                  }
-                }
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Criarinitscriptresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/scripts/{id}" : {
-      "get" : {
-        "summary" : "Detalhes do init script",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID do init script.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Detalhesdoinitscriptresponse"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Detalhesdoinitscriptresponse1"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      },
-      "put" : {
-        "summary" : "Atualizar init script",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID do init script.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "requestBody" : {
-          "description" : "",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Atualizarinitscriptrequest"
-              },
-              "example" : {
-                "name" : "install_packages",
-                "script" : ""
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Atualizarinitscriptresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      },
-      "delete" : {
-        "summary" : "Remover init script",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID do init script.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "responses" : {
-          "204" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {}
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/quotas" : {
-      "get" : {
-        "summary" : "Listar Cotas",
-        "description" : "",
-        "parameters" : [],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ListarCotasresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/ips" : {
-      "get" : {
-        "summary" : "Listar IPs",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "page",
-            "in" : "query",
-            "description" : "Número da página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 1
-            }
-          },
-          {
-            "name" : "limit",
-            "in" : "query",
-            "description" : "Quantidade de itens por página.",
-            "style" : "form",
-            "explode" : true,
-            "schema" : {
-              "type" : "number",
-              "format" : "double",
-              "example" : 10
-            }
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ListarIPsresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/users" : {
+    "/account" : {
       "get" : {
         "summary" : "Listar usuários",
         "description" : "",
@@ -925,7 +104,110 @@
         "deprecated" : false
       }
     },
-    "/users/{id}" : {
+    "/account/{id}/email" : {
+      "get" : {
+        "summary" : "Listar emails",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID do usuário.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Listaremailsresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "summary" : "Associar email",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID do usuário.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "requestBody" : {
+          "description" : "",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Associaremailrequest"
+              },
+              "example" : {
+                "address" : ""
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Associaremailresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "delete" : {
+        "summary" : "Remover email",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID do email.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "responses" : {
+          "204" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {}
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/account/{id}" : {
       "get" : {
         "summary" : "Detalhes do usuário",
         "description" : "",
@@ -1040,110 +322,7 @@
         "deprecated" : false
       }
     },
-    "/users/{id}/emails" : {
-      "get" : {
-        "summary" : "Listar emails",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID do usuário.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Listaremailsresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      },
-      "post" : {
-        "summary" : "Associar email",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID do usuário.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "requestBody" : {
-          "description" : "",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Associaremailrequest"
-              },
-              "example" : {
-                "address" : ""
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Associaremailresponse"
-                }
-              }
-            }
-          }
-        },
-        "deprecated" : false
-      },
-      "delete" : {
-        "summary" : "Remover email",
-        "description" : "",
-        "parameters" : [
-          {
-            "name" : "id",
-            "in" : "path",
-            "description" : "ID do email.",
-            "required" : true,
-            "style" : "simple",
-            "schema" : {
-              "type" : "number",
-              "format" : "double"
-            }
-          }
-        ],
-        "responses" : {
-          "204" : {
-            "description" : "",
-            "headers" : {},
-            "content" : {}
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/users/{id}/phones" : {
+    "/account/{id}/phone" : {
       "get" : {
         "summary" : "Listar telefones",
         "description" : "",
@@ -1247,7 +426,28 @@
         "deprecated" : false
       }
     },
-    "/roles" : {
+    "/account/quota" : {
+      "get" : {
+        "summary" : "Listar Cotas",
+        "description" : "",
+        "parameters" : [],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListarCotasresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/account/role" : {
       "get" : {
         "summary" : "Listar roles",
         "description" : "",
@@ -1268,7 +468,807 @@
         "deprecated" : false
       }
     },
-    "/tokens" : {
+    "/info/datacenter" : {
+      "get" : {
+        "summary" : "List datacenters",
+        "description" : "List datacenters available.",
+        "parameters" : [],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Listardatacentersresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/network/ipv4" : {
+      "get" : {
+        "summary" : "Listar IPs",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "page",
+            "in" : "query",
+            "description" : "Número da página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 1
+            }
+          },
+          {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "Quantidade de itens por página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 10
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListarIPsresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/server" : {
+      "get" : {
+        "summary" : "Listar servidores",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "page",
+            "in" : "query",
+            "description" : "Número da página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 1
+            }
+          },
+          {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "Quantidade de itens por página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 10
+            }
+          },
+          {
+            "name" : "status",
+            "in" : "query",
+            "description" : "Filtro de status do servidor.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Listarservidoresresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "summary" : "Criar servidor",
+        "description" : "",
+        "parameters" : [],
+        "requestBody" : {
+          "description" : "",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Criarservidorrequest"
+              },
+              "example" : {
+                "model" : "",
+                "operating_system" : "",
+                "hostname" : "",
+                "raid" : 1,
+                "password" : ""
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "",
+            "headers" : {
+              "Location" : {
+                "content" : {
+                  "text/plain" : {
+                    "schema" : {
+                      "type" : "string"
+                    },
+                    "example" : "/servers/1"
+                  }
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Criarservidorresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/server/{id}" : {
+      "get" : {
+        "summary" : "Detalhes do servidor",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID do Servidor.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Detalhesdoservidorresponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Detalhesdoservidorresponse1"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "delete" : {
+        "summary" : "Remover servidor",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID do Servidor.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "responses" : {
+          "204" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {}
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/server/{id}/action" : {
+      "put" : {
+        "summary" : "Gerenciar estado do servidor",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID do Servidor.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "requestBody" : {
+          "description" : "",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Gerenciarestadodoservidorrequest"
+              },
+              "example" : {
+                "action" : "start"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {}
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/server/model" : {
+      "get" : {
+        "summary" : "Listar modelos disponíveis",
+        "description" : "<a name=\"models\"></a>",
+        "parameters" : [
+          {
+            "name" : "page",
+            "in" : "query",
+            "description" : "Número da página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 1
+            }
+          },
+          {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "Quantidade de itens por página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 10
+            }
+          },
+          {
+            "name" : "datacenter",
+            "in" : "query",
+            "description" : "Filtro de servidores por datacenter.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Listarmodelosdispon%C3%ADveisresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/server/os" : {
+      "get" : {
+        "summary" : "Listar sistemas operacionais",
+        "description" : "<a name=\"operating_systems\"></a>",
+        "parameters" : [
+          {
+            "name" : "page",
+            "in" : "query",
+            "description" : "Número da página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 1
+            }
+          },
+          {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "Quantidade de itens por página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 10
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Listarsistemasoperacionaisresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/server/key" : {
+      "get" : {
+        "summary" : "Listar chaves SSH",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "page",
+            "in" : "query",
+            "description" : "Número da página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 1
+            }
+          },
+          {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "Quantidade de itens por página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 10
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListarchavesSSHresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "summary" : "Criar chave SSH",
+        "description" : "",
+        "parameters" : [],
+        "requestBody" : {
+          "description" : "",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CriarchaveSSHrequest"
+              },
+              "example" : {
+                "name" : "devuser1",
+                "public_key" : "ssh-rsa..."
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "",
+            "headers" : {
+              "Location" : {
+                "content" : {
+                  "text/plain" : {
+                    "schema" : {
+                      "type" : "string"
+                    },
+                    "example" : "/keys/1"
+                  }
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CriarchaveSSHresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/server/keys/{id}" : {
+      "get" : {
+        "summary" : "Detalhes da chave SSH",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID da chave SSH.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DetalhesdachaveSSHresponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DetalhesdachaveSSHresponse1"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "put" : {
+        "summary" : "Atualizar chave SSH",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID da chave SSH.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "requestBody" : {
+          "description" : "",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AtualizarchaveSSHrequest"
+              },
+              "example" : {
+                "name" : "devuser1"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AtualizarchaveSSHresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "delete" : {
+        "summary" : "Remover chave SSH",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID da chave SSH.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "responses" : {
+          "204" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {}
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/server/script" : {
+      "get" : {
+        "summary" : "Listar init scripts",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "page",
+            "in" : "query",
+            "description" : "Número da página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 1
+            }
+          },
+          {
+            "name" : "limit",
+            "in" : "query",
+            "description" : "Quantidade de itens por página.",
+            "style" : "form",
+            "explode" : true,
+            "schema" : {
+              "type" : "number",
+              "format" : "double",
+              "example" : 10
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Listarinitscriptsresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "summary" : "Criar init script",
+        "description" : "",
+        "parameters" : [],
+        "requestBody" : {
+          "description" : "",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Criarinitscriptrequest"
+              },
+              "example" : {
+                "name" : "install_packages",
+                "script" : ""
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "",
+            "headers" : {
+              "Location" : {
+                "content" : {
+                  "text/plain" : {
+                    "schema" : {
+                      "type" : "string"
+                    },
+                    "example" : "/init_scripts/1"
+                  }
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Criarinitscriptresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/server/script/{id}" : {
+      "get" : {
+        "summary" : "Detalhes do init script",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID do init script.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Detalhesdoinitscriptresponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Detalhesdoinitscriptresponse1"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "put" : {
+        "summary" : "Atualizar init script",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID do init script.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "requestBody" : {
+          "description" : "",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Atualizarinitscriptrequest"
+              },
+              "example" : {
+                "name" : "install_packages",
+                "script" : ""
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Atualizarinitscriptresponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "delete" : {
+        "summary" : "Remover init script",
+        "description" : "",
+        "parameters" : [
+          {
+            "name" : "id",
+            "in" : "path",
+            "description" : "ID do init script.",
+            "required" : true,
+            "style" : "simple",
+            "schema" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        ],
+        "responses" : {
+          "204" : {
+            "description" : "",
+            "headers" : {},
+            "content" : {}
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/token" : {
       "get" : {
         "summary" : "Listar API keys",
         "description" : "",
@@ -1371,7 +1371,7 @@
         "deprecated" : false
       }
     },
-    "/tokens/{id}" : {
+    "/token/{id}" : {
       "get" : {
         "summary" : "Detalhes da API key",
         "description" : "",
